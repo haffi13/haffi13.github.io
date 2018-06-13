@@ -1,30 +1,35 @@
-<html>
-  <head>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.js">
+<!DOCTYPE html>
+<head>
+<title>EpilepticSnake</title>
+<meta charset="utf-8">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/addons/p5.dom.js"></script>
+</head>
+<body>
+<script type="text/javascript">
 
-</script>    
-  </head>
-  <body>
-  <script type="text/javascript">
-  	var s;
+var s;
 var scl = 10;
 var canvasWidth = 300;
 var canvasHeight = 300;
 var f;
-var level = 1; //obsolete
+var level = 1;
 var frame;
+var gameOverTxt;
+var scoreTxt;
+var gameOver;
 
 function setup(){
 	createCanvas(canvasWidth, canvasHeight);
 	frameRate(scl);
 	s = new Snake();
 	GenerateFood();
+	gameOver = false;
+	UpdateScore();
 }
 
 function draw(){	
-	//background(0);
 	CheckContact();
-	s.Update();
 	ShowNextFrame();
 }
 
@@ -34,39 +39,42 @@ function ShowNextFrame(){
 		background(0);
 	}
 	else{
-		console.log('else');
 		background(255);
+	}
+	if(gameOver != true){
+		s.Update();
 	}
 	s.Show();
 	f.Show();
 }
 
 function keyPressed(){
-
-	if(keyCode === LEFT_ARROW){
+	if(keyCode === LEFT_ARROW || keyCode == 65){
 		MoveLeft();
 	}
-	if(keyCode === UP_ARROW){
+	if(keyCode === UP_ARROW || keyCode == 87){
 		MoveUp();	
 	}
-	if(keyCode === RIGHT_ARROW){
+	if(keyCode === RIGHT_ARROW || keyCode == 68){
 		MoveRight();	
 	}
-	if(keyCode === DOWN_ARROW){
+	if(keyCode === DOWN_ARROW || keyCode == 83){
 		MoveDown();	
+	}
+	if(gameOver == true){
+		ResetGame();
 	}
 	return false; // Done to prevent false readings by the browser if keys are hotkeyes
 }
 
 
 function Snake(){
-	this.x = scl;
-	this.y = 0;
+	this.x = 150 - scl;
+	this.y = 150 - scl;
 	this.xSpeed = 1;
 	this.ySpeed = 0;
 	this.length = 0;
 	this.tail = [];
-
 
 	this.dir = function(x, y){
 		this.xSpeed = x;
@@ -86,9 +94,7 @@ function Snake(){
 	}
 
 	this.Show = function(){
-		//fill(GetRandomColor());
 		noStroke();
-		//stroke(255);
 		if(frameCount % 2 == 0){
 			fill(255);
 		}
@@ -96,21 +102,10 @@ function Snake(){
 			fill(0);
 		}
 		for(var i = 0; i < this.tail.length; i++){
-			//fill(255);
 			rect(this.tail[i].x, this.tail[i].y, scl, scl);	
 		}
-		//fill(255);
 		rect(this.x, this.y, scl, scl);
 	}	
-}
-
-function GetRandomColor(){
-	let r = Math.floor(random() * 255);
-	let g = Math.floor(random() * 255);
-	let b = Math.floor(random() * 255);
-
-	let c = color(r,g,b);
-	return c;
 }
 
 function MoveLeft(){
@@ -152,50 +147,58 @@ function CheckContact(){
 		if(pos.x == s.x && pos.y == s.y){
 			Die();
 		}
-	}
-	
+	}	
 }
 
 function Die(){
-	console.clear();
+	gameOver = true;
+	gameOverTxt = createDiv('<h2>Game Over!<br>Press any key to continue!</h2>');
+	gameOverTxt.position(320, 70);
+}
+
+// Called from gameOver conditional check in keyPressed function.
+function ResetGame(){
+	removeElements();
 	setup();
 }
+
 function EatFood(){
 	s.length++;
 	GenerateFood();
-	console.log('Your score is: ' + s.length + '...');
+	UpdateScore();
+}
+
+function UpdateScore(){
+	removeElements();
+	this.msg = 'Score: ' + s.length;	
+	scoreTxt = createDiv('<h2>' + this.msg + '</h2>');
+	scoreTxt.position(320, 10);
 }
 
 function GenerateFood(){
 		this.x = (Math.floor(Math.random() * 30)) * scl;
 		this.y = (Math.floor(Math.random() * 30)) * scl;
-		this.c = GenerateRandomColor();
-
-		f = new Food(x, y);			
+		f = new Food(this.x, this.y);			
 }
 
 function Food(x, y){
 	this.x = x;
 	this.y = y;
 	this.Show = function(){
-		fill(0);
+		if(frameCount % 2 == 0){
+			this.fC = 255;
+			this.sC = 0;
+		}
+		else{
+			this.fC = 0;
+			this.sC = 255;
+		}
+		fill(this.fC);
 		strokeWeight(1);
-		stroke(255);
+		stroke(this.sC);
 		rect((this.x), (this.y), scl, scl);
 	}
 }
-
-function GenerateRandomColor(){
-	this.r = Math.floor(Math.random() * 256);
-	this.g = Math.floor(Math.random() * 256);
-	this.b = Math.floor(Math.random() * 256);
-
-	this.c = color(r,g,b);
-	return this.c; 
-}
-  </script>
-  </body>
+</script>
+</body>
 </html>
-
-
-
