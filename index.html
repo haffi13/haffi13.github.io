@@ -49,19 +49,31 @@ function ShowNextFrame(){
 }
 
 function keyPressed(){
-	if(keyCode === LEFT_ARROW || keyCode == 65){
+	if(keyCode === 37){
 		MoveLeft();
 	}
-	if(keyCode === UP_ARROW || keyCode == 87){
+	else if(keyCode === 65){
+		MoveLeft();
+	}
+	if(keyCode === 38){
 		MoveUp();	
 	}
-	if(keyCode === RIGHT_ARROW || keyCode == 68){
+	else if(keyCode === 87){
+		MoveUp();
+	}
+	if(keyCode === 39){
 		MoveRight();	
 	}
-	if(keyCode === DOWN_ARROW || keyCode == 83){
+	else if(keyCode === 68){
+		MoveRight();
+	}
+	if(keyCode === 40){
 		MoveDown();	
 	}
-	if(gameOver == true){
+	else if(keyCode === 83){
+		MoveDown();
+	}
+	if(gameOver === true){
 		ResetGame();
 	}
 	return false; // Done to prevent false readings by the browser if keys are hotkeyes
