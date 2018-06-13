@@ -122,25 +122,29 @@ function Snake(){
 
 function MoveLeft(){
 	if(s.xSpeed != level){
-			s.dir(-level, 0);	
+			s.dir(-level, 0);
+			console.log('left');	
 		}
 }
 
 function MoveUp(){
 	if(s.ySpeed != level){
 			s.dir(0, -level);	
+			console.log('up');
 		}
 }
 
 function MoveRight(){
 	if(s.xSpeed != -level){
-			s.dir(level, 0);	
+			s.dir(level, 0);
+			console.log('right');	
 		}
 }
 
 function MoveDown(){
 	if(s.ySpeed != -level){
-			s.dir(0, level);	
+			s.dir(0, level);
+			console.log('up');	
 		}
 }
 
