@@ -1,0 +1,201 @@
+<html>
+  <head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.js">
+
+</script>    
+  </head>
+  <body>
+  <script type="text/javascript">
+  	var s;
+var scl = 10;
+var canvasWidth = 300;
+var canvasHeight = 300;
+var f;
+var level = 1; //obsolete
+var frame;
+
+function setup(){
+	createCanvas(canvasWidth, canvasHeight);
+	frameRate(scl);
+	s = new Snake();
+	GenerateFood();
+}
+
+function draw(){	
+	//background(0);
+	CheckContact();
+	s.Update();
+	ShowNextFrame();
+}
+
+function ShowNextFrame(){
+	frame = frameCount;
+	if(frameCount % 2 == 0){
+		background(0);
+	}
+	else{
+		console.log('else');
+		background(255);
+	}
+	s.Show();
+	f.Show();
+}
+
+function keyPressed(){
+
+	if(keyCode === LEFT_ARROW){
+		MoveLeft();
+	}
+	if(keyCode === UP_ARROW){
+		MoveUp();	
+	}
+	if(keyCode === RIGHT_ARROW){
+		MoveRight();	
+	}
+	if(keyCode === DOWN_ARROW){
+		MoveDown();	
+	}
+	return false; // Done to prevent false readings by the browser if keys are hotkeyes
+}
+
+
+function Snake(){
+	this.x = scl;
+	this.y = 0;
+	this.xSpeed = 1;
+	this.ySpeed = 0;
+	this.length = 0;
+	this.tail = [];
+
+
+	this.dir = function(x, y){
+		this.xSpeed = x;
+		this.ySpeed = y;
+	}
+
+	this.Update = function(){
+		if(this.length === this.tail.length){
+			for(var i = 0; i < this.tail.length - 1; i++){
+			this.tail[i] = this.tail[i + 1];	
+			}
+		}
+		this.tail[this.length - 1] = createVector(this.x, this.y);
+		
+		this.x += this.xSpeed * scl;
+		this.y += this.ySpeed * scl;
+	}
+
+	this.Show = function(){
+		//fill(GetRandomColor());
+		noStroke();
+		//stroke(255);
+		if(frameCount % 2 == 0){
+			fill(255);
+		}
+		else{
+			fill(0);
+		}
+		for(var i = 0; i < this.tail.length; i++){
+			//fill(255);
+			rect(this.tail[i].x, this.tail[i].y, scl, scl);	
+		}
+		//fill(255);
+		rect(this.x, this.y, scl, scl);
+	}	
+}
+
+function GetRandomColor(){
+	let r = Math.floor(random() * 255);
+	let g = Math.floor(random() * 255);
+	let b = Math.floor(random() * 255);
+
+	let c = color(r,g,b);
+	return c;
+}
+
+function MoveLeft(){
+	if(s.xSpeed != level){
+			s.dir(-level, 0);	
+		}
+}
+
+function MoveUp(){
+	if(s.ySpeed != level){
+			s.dir(0, -level);	
+		}
+}
+
+function MoveRight(){
+	if(s.xSpeed != -level){
+			s.dir(level, 0);	
+		}
+}
+
+function MoveDown(){
+	if(s.ySpeed != -level){
+			s.dir(0, level);	
+		}
+}
+
+function CheckContact(){
+	// If the snake hits the frame
+	if(s.x > 290 || s.x < 0 || s.y > 290 || s.y < 0){
+		Die();
+	  }
+	// If the snake hits the food
+	if(f.x == s.x && f.y == s.y){
+		EatFood();
+	}
+	// If the snake hits it self
+	for(var i = 0; i < s.tail.length; i++){
+		var pos = s.tail[i];
+		if(pos.x == s.x && pos.y == s.y){
+			Die();
+		}
+	}
+	
+}
+
+function Die(){
+	console.clear();
+	setup();
+}
+function EatFood(){
+	s.length++;
+	GenerateFood();
+	console.log('Your score is: ' + s.length + '...');
+}
+
+function GenerateFood(){
+		this.x = (Math.floor(Math.random() * 30)) * scl;
+		this.y = (Math.floor(Math.random() * 30)) * scl;
+		this.c = GenerateRandomColor();
+
+		f = new Food(x, y);			
+}
+
+function Food(x, y){
+	this.x = x;
+	this.y = y;
+	this.Show = function(){
+		fill(0);
+		strokeWeight(1);
+		stroke(255);
+		rect((this.x), (this.y), scl, scl);
+	}
+}
+
+function GenerateRandomColor(){
+	this.r = Math.floor(Math.random() * 256);
+	this.g = Math.floor(Math.random() * 256);
+	this.b = Math.floor(Math.random() * 256);
+
+	this.c = color(r,g,b);
+	return this.c; 
+}
+  </script>
+  </body>
+</html>
+
+
+
