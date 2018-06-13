@@ -28,8 +28,10 @@ function setup(){
 	UpdateScore();
 }
 
-function draw(){	
-	CheckContact();
+function draw(){
+	if(gameOver != true){
+		CheckContact();
+	}	
 	ShowNextFrame();
 }
 
@@ -61,6 +63,10 @@ function keyPressed(){
 	if(keyCode === DOWN_ARROW){
 		MoveDown();	
 	}
+	if(gameOver === true){
+		ResetGame();
+	}
+	console.log('keyPressed');
 	return false; // Done to prevent false readings by the browser if keys are hotkeyes
 }
 
@@ -155,7 +161,6 @@ function Die(){
 	gameOver = true;
 	gameOverTxt = createDiv('<h2>Game Over!<br>Press any key to continue!</h2>');
 	gameOverTxt.position(320, 70);
-	removeElements();
 }
 
 // Called from gameOver conditional check in keyPressed function.
