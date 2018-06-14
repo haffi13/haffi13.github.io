@@ -51,23 +51,23 @@ function ShowNextFrame(){
 }
 
 function keyPressed(){
-	if(keyCode === LEFT_ARROW){
+	if(keyCode === 37){
 		MoveLeft();
 	}
-	if(keyCode === UP_ARROW){
+	if(keyCode === 38){
 		MoveUp();	
 	}
-	if(keyCode === RIGHT_ARROW){
+	if(keyCode === 39){
 		MoveRight();	
 	}
-	if(keyCode === DOWN_ARROW){
+	if(keyCode === 40){
 		MoveDown();	
 	}
 	if(gameOver === true){
 		ResetGame();
 	}
 	console.log('keyPressed');
-	return false; // Done to prevent false readings by the browser if keys are hotkeyes
+	//return false; 
 }
 
 
