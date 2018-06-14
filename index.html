@@ -50,7 +50,7 @@ function ShowNextFrame(){
 	f.Show();
 }
 
-function keyPressed(){
+/*function keyPressed(){
 	if(keyCode === 37){
 		MoveLeft();
 	}
@@ -67,7 +67,27 @@ function keyPressed(){
 		ResetGame();
 	}
 	console.log('keyPressed');
-	//return false; 
+	return false; 
+}*/
+
+function keyReleased(){
+	if(keyCode === 37){
+		MoveLeft();
+	}
+	if(keyCode === 38){
+		MoveUp();	
+	}
+	if(keyCode === 39){
+		MoveRight();	
+	}
+	if(keyCode === 40){
+		MoveDown();	
+	}
+	if(gameOver === true){
+		ResetGame();
+	}
+	return false;
+	console.log('keyReleased');
 }
 
 
