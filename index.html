@@ -52,16 +52,16 @@ function ShowNextFrame(){
 }
 
 function CheckInput(){
-	if(keyIsDown(LEFT_ARROW)){
+	if(keyIsDown(keyCode == 37)){
 		MoveLeft();
 	}
-	if(keyIsDown(UP_ARROW)){
+	if(keyIsDown(keyCode == 38)){
 		MoveUp();
 	}
-	if(keyIsDown(RIGHT_ARROW)){
+	if(keyIsDown(keyCode == 39)){
 		MoveRight();
 	}
-	if(keyIsDown(DOWN_ARROW)){
+	if(keyIsDown(keyCode == 40)){
 		MoveDown();
 	}
 }
