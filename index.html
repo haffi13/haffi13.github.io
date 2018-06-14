@@ -29,6 +29,7 @@ function setup(){
 }
 
 function draw(){
+	CheckInput();
 	if(gameOver != true){
 		CheckContact();
 	}	
@@ -50,27 +51,41 @@ function ShowNextFrame(){
 	f.Show();
 }
 
-/*function keyPressed(){
-	if(keyCode === 37){
+function CheckInput(){
+	if(keyIsDown(LEFT_ARROW)){
 		MoveLeft();
 	}
-	if(keyCode === 38){
-		MoveUp();	
+	if(keyIsDown(UP_ARROW)){
+		MoveUp();
 	}
-	if(keyCode === 39){
-		MoveRight();	
+	if(keyIsDown(RIGHT_ARROW)){
+		MoveRight();
 	}
-	if(keyCode === 40){
-		MoveDown();	
+	if(keyIsDown(DOWN_ARROW)){
+		MoveDown();
 	}
+}
+function keyPressed(){
+	//if(keyCode === 37){
+	//	MoveLeft();
+	//}
+	//if(keyCode === 38){
+	//	MoveUp();	
+	//}
+	//if(keyCode === 39){
+	//	MoveRight();	
+	//}
+	//if(keyCode === 40){
+	//	MoveDown();	
+	//}
 	if(gameOver === true){
 		ResetGame();
 	}
 	console.log('keyPressed');
 	return false; 
-}*/
+}
 
-function keyReleased(){
+/*function keyReleased(){
 	if(keyCode === 37){
 		MoveLeft();
 	}
@@ -88,6 +103,26 @@ function keyReleased(){
 	}
 	return false;
 	console.log('keyReleased');
+}*/
+
+function keyDown(){
+	console.log('keyDown');
+	if(keyCode === 37){
+		MoveLeft();
+	}
+	if(keyCode === 38){
+		MoveUp();	
+	}
+	if(keyCode === 39){
+		MoveRight();	
+	}
+	if(keyCode === 40){
+		MoveDown();	
+	}
+	if(gameOver === true){
+		ResetGame();
+	}
+	return false;
 }
 
 
