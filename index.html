@@ -18,9 +18,10 @@ var frame;
 var gameOverTxt;
 var scoreTxt;
 var gameOver;
+var canvas;
 
 function setup(){
-	createCanvas(canvasWidth, canvasHeight);
+	canvas = createCanvas(canvasWidth, canvasHeight);
 	frameRate(scl);
 	s = new Snake();
 	GenerateFood();
@@ -52,16 +53,16 @@ function ShowNextFrame(){
 }
 
 function CheckInput(){
-	if(keyIsDown(keyCode == 37)){
+	if(keyIsDown(LEFT_ARROW)){
 		MoveLeft();
 	}
-	if(keyIsDown(keyCode == 38)){
+	if(keyIsDown(UP_ARROW)){
 		MoveUp();
 	}
-	if(keyIsDown(keyCode == 39)){
+	if(keyIsDown(RIGHT_ARROW)){
 		MoveRight();
 	}
-	if(keyIsDown(keyCode == 40)){
+	if(keyIsDown(DOWN_ARROW)){
 		MoveDown();
 	}
 }
